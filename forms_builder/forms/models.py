@@ -14,6 +14,7 @@ from forms_builder.forms import settings
 from forms_builder.forms.utils import now, slugify, unique_slug
 
 from terms.views import get_perms_type
+from multiselectfield import MultiSelectField
 
 
 STATUS_DRAFT = 1
@@ -22,7 +23,7 @@ STATUS_CHOICES = (
     (STATUS_DRAFT, _("Draft")),
     (STATUS_PUBLISHED, _("Published")),
 )
-TERMS_CHOICES = [(v, k) for k, v in list(get_perms_type().items())]
+TERMS_CHOICES = list(get_perms_type().items())
 
 
 class FormManager(models.Manager):
@@ -78,7 +79,7 @@ class AbstractForm(models.Model):
         blank=True, null=True)
     login_required = models.BooleanField(_("Login required"), default=False,
         help_text=_("If checked, only logged in users can view the form"))
-    terms = models.CharField(_("Terms"), choices=TERMS_CHOICES, max_length=255)
+    terms = MultiSelectField(_("Terms"), choices=TERMS_CHOICES, max_length=255)
     send_email = models.BooleanField(_("Send email"), default=True, help_text=
         _("If checked, the person entering the form will be sent an email"))
     email_from = models.EmailField(_("From address"), blank=True,

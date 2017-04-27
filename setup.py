@@ -35,7 +35,7 @@ try:
     setup(
         name = "django-forms-builder",
         version = __import__("forms_builder").__version__,
-        author = ("Stephen McDonald", 
+        author = "Stephen McDonald"
         author_email = "stephen.mc@gmail.com",
         description = ("A Django reusable app providing the ability for "
                        "admin users to create their own forms and report "

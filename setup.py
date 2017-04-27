@@ -35,7 +35,7 @@ try:
     setup(
         name = "django-forms-builder",
         version = __import__("forms_builder").__version__,
-        author = "Stephen McDonald"
+        author = "Stephen McDonald",
         author_email = "stephen.mc@gmail.com",
         description = ("A Django reusable app providing the ability for "
                        "admin users to create their own forms and report "
@@ -52,7 +52,6 @@ try:
             "django-email-extras >= 0.2",
             "django >= 1.8, < 1.11",
             "future <= 0.15.0",
-            "django-multiselectfield >= 0.1.5"
         ],
         classifiers = [
             "Development Status :: 5 - Production/Stable",

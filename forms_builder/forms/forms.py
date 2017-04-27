@@ -302,7 +302,7 @@ class EntriesForm(forms.Form):
                     label=_("and"), widget=SelectDateWidget(), required=False)
             else:
                 # Text box for search term to filter by.
-                contains_field = forms.CharField(label=" ", required=False)
+                contains_field = forms.CharField(label=" ", required=False, max_length=2000)
                 self.fields["%s_filter" % field_key] = text_filter_field
                 self.fields["%s_contains" % field_key] = contains_field
         # Add ``FormEntry.entry_time`` as a field.

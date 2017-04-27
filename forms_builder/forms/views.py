@@ -18,6 +18,8 @@ from forms_builder.forms.settings import EMAIL_FAIL_SILENTLY
 from forms_builder.forms.signals import form_invalid, form_valid
 from forms_builder.forms.utils import split_choices
 
+from terms.views import update_user as terms_update_user
+
 
 class FormDetail(TemplateView):
 
@@ -49,6 +51,7 @@ class FormDetail(TemplateView):
         else:
             # Attachments read must occur before model save,
             # or seek() will fail on large uploads.
+            terms_update_user(request)
             attachments = []
             for f in form_for_form.files.values():
                 f.seek(0)

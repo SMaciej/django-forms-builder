@@ -22,7 +22,7 @@ STATUS_CHOICES = (
     (STATUS_DRAFT, _("Draft")),
     (STATUS_PUBLISHED, _("Published")),
 )
-TERMS_CHOICES = get_perms_type()
+TERMS_CHOICES = [(v, k) for k, v in get_perms_type().iteritems()]
 
 
 class FormManager(models.Manager):

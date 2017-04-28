@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='form',
             name='terms',
-            field=multiselectfield.db.fields.MultiSelectField(blank=True, max_length=255, null=True, verbose_name='Terms'),
+            field=multiselectfield.db.fields.MultiSelectField(blank=True, max_length=1020, null=True, verbose_name='Terms'),
         ),
         migrations.AlterField(
             model_name='form',

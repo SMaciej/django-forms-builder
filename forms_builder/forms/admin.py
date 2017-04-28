@@ -35,7 +35,7 @@ form_admin_filter_horizontal = ()
 form_admin_fieldsets = [
     (None, {"fields": ("title", ("status", "login_required",),
         ("publish_date", "expiry_date",),
-        "intro", "button_text", "response", "redirect_url", "terms")}),
+        "intro", "button_text", "response", "redirect_url", "forms_list", "terms")}),
     (_("Email"), {"fields": ("send_email", "email_from", "email_copies",
         "email_subject", "email_message")}), ]
 
@@ -201,7 +201,7 @@ class FormAdmin(admin.ModelAdmin):
 
 class FormsListAdmin(admin.ModelAdmin):
     list_display = ('title', )
-    search_fields = ('title', 'forms', 'description')
+    search_fields = ('title', 'description')
     prepopulated_fields = {'slug': ('title',)}
 
 

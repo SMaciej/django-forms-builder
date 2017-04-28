@@ -8,4 +8,5 @@ from forms_builder.forms import views
 urlpatterns = [
     url(r"(?P<slug>.*)/sent/$", views.form_sent, name="form_sent"),
     url(r"(?P<slug>.*)/$", views.form_detail, name="form_detail"),
+    url(r"list/(?P<slug>.*)$", views.forms_list, name="forms_list"),
 ]

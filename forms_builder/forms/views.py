@@ -6,19 +6,19 @@ from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.shortcuts import get_object_or_404, redirect, render_to_response
+from django.shortcuts import get_object_or_404, redirect, render, render_to_response
 from django.template import RequestContext
 from django.utils.http import urlquote
 from django.views.generic.base import TemplateView
 from email_extras.utils import send_mail_template
 
 from forms_builder.forms.forms import FormForForm
-from forms_builder.forms.models import Form
+from forms_builder.forms.models import Form, FormsList
 from forms_builder.forms.settings import EMAIL_FAIL_SILENTLY
 from forms_builder.forms.signals import form_invalid, form_valid
 from forms_builder.forms.utils import split_choices
 
-from terms.views import update_user as terms_update_user
+# from terms.views import update_user as terms_update_user
 
 
 class FormDetail(TemplateView):
@@ -51,7 +51,7 @@ class FormDetail(TemplateView):
         else:
             # Attachments read must occur before model save,
             # or seek() will fail on large uploads.
-            terms_update_user(request)
+            # terms_update_user(request)
             attachments = []
             for f in form_for_form.files.values():
                 f.seek(0)
@@ -110,6 +110,7 @@ class FormDetail(TemplateView):
                                fail_silently=EMAIL_FAIL_SILENTLY,
                                headers=headers)
 
+
 form_detail = FormDetail.as_view()
 
 
@@ -120,3 +121,12 @@ def form_sent(request, slug, template="forms/form_sent.html"):
     published = Form.objects.published(for_user=request.user)
     context = {"form": get_object_or_404(published, slug=slug)}
     return render_to_response(template, context, RequestContext(request))
+
+
+def forms_list(request, slug, template="forms/forms_list.html"):
+    """
+    Show forms list.
+    """
+    forms_list = FormsList.objects.get(slug=slug)
+    context = {'forms_list': forms_list}
+    return render(request, template, context)

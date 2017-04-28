@@ -13,7 +13,7 @@ from forms_builder.forms import fields
 from forms_builder.forms import settings
 from forms_builder.forms.utils import now, slugify, unique_slug
 
-from terms.views import get_perms_type
+# from terms.views import get_perms_type
 from multiselectfield import MultiSelectField
 from sorl.thumbnail import ImageField
 
@@ -24,7 +24,8 @@ STATUS_CHOICES = (
     (STATUS_DRAFT, _("Draft")),
     (STATUS_PUBLISHED, _("Published")),
 )
-TERMS_CHOICES = [(v, k) for k, v in list(get_perms_type().items())]
+# TERMS_CHOICES = [(v, k) for k, v in list(get_perms_type().items())]
+TERMS_CHOICES = (('a', 'b'),)
 
 
 class FormManager(models.Manager):
@@ -61,6 +62,8 @@ class AbstractForm(models.Model):
     sites = models.ManyToManyField(Site,
         default=[settings.SITE_ID], related_name="%(app_label)s_%(class)s_forms")
     title = models.CharField(_("Title"), max_length=255)
+    banner = ImageField(_("Banner"), upload_to='form_banners', 
+                        null=True, blank=True)
     slug = models.SlugField(_("Slug"), editable=settings.EDITABLE_SLUGS,
         max_length=100, unique=True)
     intro = models.TextField(_("Intro"), blank=True)
@@ -261,6 +264,23 @@ class AbstractFieldEntry(models.Model):
 #                                                 #
 ###################################################
 
+class FormsList(models.Model):
+    """
+    A list of forms.
+    """
+
+    title = models.CharField(_("Title"), max_length=255)
+    slug = models.SlugField(_("Slug"), max_length=255, unique=True)
+    description = models.TextField(_("Description"), blank=True)
+
+    class Meta:
+        verbose_name = _("Forms list")
+        verbose_name_plural = _("Forms lists")
+
+    def __str__(self):
+        return str(self.title)
+
+
 class FormEntry(AbstractFormEntry):
     form = models.ForeignKey("Form", related_name="entries")
 
@@ -270,7 +290,7 @@ class FieldEntry(AbstractFieldEntry):
 
 
 class Form(AbstractForm):
-    pass
+    forms_list = models.ManyToManyField(FormsList, related_name='forms')
 
 
 class Field(AbstractField):
@@ -296,16 +316,3 @@ class Field(AbstractField):
         fields_after = self.form.fields.filter(order__gte=self.order)
         fields_after.update(order=models.F("order") - 1)
         super(Field, self).delete(*args, **kwargs)
-
-
-class FormsList(models.Model):
-    """
-    A list of forms.
-    """
-
-    forms = models.ManyToManyField(Form, _("Form"), related_name="lists")
-    title = models.CharField(_("Title"), max_length=255)
-    slug = models.SlugField(_("Slug"), max_length=255, unique=True)
-    banner = ImageField(_("Banner"), upload_to='form_banners', 
-                        null=True, blank=True)
-    description = models.TextField(_("Description"), blank=True)

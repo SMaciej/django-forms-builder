@@ -19,6 +19,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='form',
             name='forms_list',
-            field=models.ManyToManyField(related_name='forms', to='forms.FormsList'),
+            field=models.ManyToManyField(related_name='forms', to='forms.FormsList', blank=True, null=True),
         ),
     ]

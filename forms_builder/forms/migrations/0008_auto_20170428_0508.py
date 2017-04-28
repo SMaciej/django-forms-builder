@@ -17,6 +17,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='form',
             name='intro',
-            field=tinymce_ex.models.HTMLField(blank=True, null=True, verbose_name='Intro')),
+            field=tinymce_ex.models.HTMLField(blank=True, null=True, verbose_name='Intro'),
         ),
     ]

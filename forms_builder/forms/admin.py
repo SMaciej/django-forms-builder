@@ -17,7 +17,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ungettext, ugettext_lazy as _
 
 from forms_builder.forms.forms import EntriesForm
-from forms_builder.forms.models import Form, Field, FormEntry, FieldEntry
+from forms_builder.forms.models import Form, Field, FormEntry, FieldEntry, FormsList
 from forms_builder.forms.settings import CSV_DELIMITER, UPLOAD_ROOT
 from forms_builder.forms.settings import USE_SITES, EDITABLE_SLUGS
 from forms_builder.forms.utils import now, slugify
@@ -199,4 +199,11 @@ class FormAdmin(admin.ModelAdmin):
         return response
 
 
+class FormsListAdmin(admin.ModelAdmin):
+    list_display = ('title', )
+    search_fields = ('title', 'forms', 'description')
+    prepopulated_fields = {'slug': ('title',)}
+
+
 admin.site.register(Form, FormAdmin)
+admin.site.register(FormsList, FormsListAdmin)

@@ -52,6 +52,8 @@ try:
             "django-email-extras >= 0.2",
             "django >= 1.8, < 1.11",
             "future <= 0.15.0",
+            "django-multiselectfield >= 0.1.5",
+            "sorl-thumbnail >= 12.3",
         ],
         classifiers = [
             "Development Status :: 5 - Production/Stable",

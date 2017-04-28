@@ -15,6 +15,7 @@ from forms_builder.forms.utils import now, slugify, unique_slug
 
 from terms.views import get_perms_type
 from multiselectfield import MultiSelectField
+from sorl.thumbnail import ImageField
 
 
 STATUS_DRAFT = 1
@@ -43,6 +44,19 @@ class FormManager(models.Manager):
         return self.filter(*filters)
 
 
+class FormsList(models.Manager):
+    """
+    A list of forms.
+    """
+
+    forms = models.ManyToManyField(_("Form"), related_name="lists")
+    title = models.CharField(_("Title"), max_length=255)
+    slug = models.SlugField(_("Slug"), max_length=255, unique=True)
+    banner = ImageField(_("Banner"), upload_to='form_banners', 
+                        null=True, blank=True)
+    description = models.TextField(_("Description"), blank=True)
+
+
 ######################################################################
 #                                                                    #
 #   Each of the models are implemented as abstract to allow for      #
@@ -59,7 +73,7 @@ class AbstractForm(models.Model):
 
     sites = models.ManyToManyField(Site,
         default=[settings.SITE_ID], related_name="%(app_label)s_%(class)s_forms")
-    title = models.CharField(_("Title"), max_length=50)
+    title = models.CharField(_("Title"), max_length=255)
     slug = models.SlugField(_("Slug"), editable=settings.EDITABLE_SLUGS,
         max_length=100, unique=True)
     intro = models.TextField(_("Intro"), blank=True)

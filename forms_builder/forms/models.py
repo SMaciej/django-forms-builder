@@ -44,19 +44,6 @@ class FormManager(models.Manager):
         return self.filter(*filters)
 
 
-class FormsList(models.Manager):
-    """
-    A list of forms.
-    """
-
-    forms = models.ManyToManyField(_("Form"), related_name="lists")
-    title = models.CharField(_("Title"), max_length=255)
-    slug = models.SlugField(_("Slug"), max_length=255, unique=True)
-    banner = ImageField(_("Banner"), upload_to='form_banners', 
-                        null=True, blank=True)
-    description = models.TextField(_("Description"), blank=True)
-
-
 ######################################################################
 #                                                                    #
 #   Each of the models are implemented as abstract to allow for      #
@@ -309,3 +296,16 @@ class Field(AbstractField):
         fields_after = self.form.fields.filter(order__gte=self.order)
         fields_after.update(order=models.F("order") - 1)
         super(Field, self).delete(*args, **kwargs)
+
+
+class FormsList(models.Model):
+    """
+    A list of forms.
+    """
+
+    forms = models.ManyToManyField(Form, _("Form"), related_name="lists")
+    title = models.CharField(_("Title"), max_length=255)
+    slug = models.SlugField(_("Slug"), max_length=255, unique=True)
+    banner = ImageField(_("Banner"), upload_to='form_banners', 
+                        null=True, blank=True)
+    description = models.TextField(_("Description"), blank=True)

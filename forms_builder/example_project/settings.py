@@ -77,6 +77,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'forms_builder.forms',
+    'sorl.thumbnail'
 )
 
 FORMS_BUILDER_EXTRA_FIELDS = (

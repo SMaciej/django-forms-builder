@@ -13,7 +13,7 @@ from forms_builder.forms import fields
 from forms_builder.forms import settings
 from forms_builder.forms.utils import now, slugify, unique_slug
 
-# from terms.views import get_perms_type
+from terms.views import get_perms_type
 from multiselectfield import MultiSelectField
 from sorl.thumbnail import ImageField
 
@@ -24,8 +24,7 @@ STATUS_CHOICES = (
     (STATUS_DRAFT, _("Draft")),
     (STATUS_PUBLISHED, _("Published")),
 )
-# TERMS_CHOICES = [(v, k) for k, v in list(get_perms_type().items())]
-TERMS_CHOICES = (('a', 'b'),)
+TERMS_CHOICES = [(v, k) for k, v in list(get_perms_type().items())]
 
 
 class FormManager(models.Manager):

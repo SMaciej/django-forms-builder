@@ -16,6 +16,7 @@ from forms_builder.forms.utils import now, slugify, unique_slug
 from terms.views import get_perms_type
 from multiselectfield import MultiSelectField
 from sorl.thumbnail import ImageField
+from tinymce_ex.models import HTMLField
 
 
 STATUS_DRAFT = 1
@@ -65,7 +66,7 @@ class AbstractForm(models.Model):
                         null=True, blank=True)
     slug = models.SlugField(_("Slug"), editable=settings.EDITABLE_SLUGS,
         max_length=100, unique=True)
-    intro = models.TextField(_("Intro"), blank=True)
+    intro = models.HTMLField(_("Intro"), blank=True, null=True)
     button_text = models.CharField(_("Button text"), max_length=50,
         default=_("Submit"))
     response = models.TextField(_("Response"), blank=True)

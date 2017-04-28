@@ -10,7 +10,7 @@ import tinymce_ex.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0007_auto_20170428_0328'),
+        ('forms', '0007_auto_20170428_0506'),
     ]
 
     operations = [

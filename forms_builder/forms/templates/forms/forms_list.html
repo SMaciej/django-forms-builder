@@ -1,3 +1,3 @@
-{% for form in forms_list.forms.all %}
+{% for form in forms.all %}
 	<a href="{{ form.get_absolute_url }}"> {{ form }} </a>
 {% endfor %}

@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import json
+import datetime
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -128,5 +129,7 @@ def forms_list(request, slug, template="forms/forms_list.html"):
     Show forms list.
     """
     forms_list = FormsList.objects.get(slug=slug)
-    context = {'forms_list': forms_list}
+    forms = forms_list.forms.all().filter(status=2, 
+                                          publish_date__lt=datetime.datetime.now())
+    context = {'forms': forms}
     return render(request, template, context)

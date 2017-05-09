@@ -13,9 +13,5 @@
     </style>
 </head>
 <body>
-    {% if form %}
-        {% render_built_form form %}
-    {% else %}
-        {% trans 'Form is not active.' %}
-    {% endif %}
+    {% render_built_form form %}
 </body>

@@ -34,8 +34,7 @@ class FormDetail(TemplateView):
             context["form"] = published.get(slug=kwargs["slug"])
             return context
         except Form.DoesNotExist:
-            context["form"] = None
-            return self.render_to_response(context)
+            return render_to_response("forms/form_disabled.html")
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)

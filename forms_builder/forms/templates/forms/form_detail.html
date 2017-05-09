@@ -1,5 +1,5 @@
 <!doctype html>
-{% load forms_builder_tags %}
+{% load i18n forms_builder_tags %}
 <head>
     <meta charset="utf-8">
     <title>{{ form.title }}</title>
@@ -13,5 +13,9 @@
     </style>
 </head>
 <body>
-    {% render_built_form form %}
+    {% if form %}
+        {% render_built_form form %}
+    {% else %}
+        {% trans 'Form is not active.' %}
+    {% endif %}
 </body>

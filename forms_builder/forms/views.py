@@ -11,6 +11,7 @@ from django.shortcuts import get_object_or_404, redirect, render, render_to_resp
 from django.template import RequestContext
 from django.utils.http import urlquote
 from django.views.generic.base import TemplateView
+from django.db.models import Q
 from email_extras.utils import send_mail_template
 
 from forms_builder.forms.forms import FormForForm
@@ -29,7 +30,10 @@ class FormDetail(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(FormDetail, self).get_context_data(**kwargs)
         published = Form.objects.published(for_user=self.request.user)
-        context["form"] = get_object_or_404(published, slug=kwargs["slug"])
+        if not published:
+            context["form"] = None
+        else:
+            context["form"] = get_object_or_404(published, slug=kwargs["slug"])
         return context
 
     def get(self, request, *args, **kwargs):
@@ -130,7 +134,7 @@ def forms_list(request, slug, template="forms/forms_list.html"):
     """
     forms_list = FormsList.objects.get(slug=slug)
     forms = forms_list.forms.all().filter(status=2, 
-                                          publish_date__lt=datetime.datetime.now(), 
-                                          expiry_date__gt=datetime.datetime.now())
+            publish_date__lte=datetime.datetime.now(), 
+            Q(expiry_date__gte=datetime.datetime.now()) | Q(expiry_date__isnull=True))
     context = {'forms': forms}
     return render(request, template, context)

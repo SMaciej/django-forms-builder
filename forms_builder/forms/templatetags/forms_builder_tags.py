@@ -3,6 +3,7 @@ from future.builtins import str
 
 from django import template
 from django.template.loader import get_template
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from forms_builder.forms.forms import FormForForm
 from forms_builder.forms.models import Form, AbstractForm
@@ -32,7 +33,7 @@ class BuiltFormNode(template.Node):
             form = template.Variable(self.value).resolve(context)
         if (not issubclass(form.__class__, AbstractForm)
                 or not form.published(for_user=user)):
-            return ""
+            return _('Form is not published.')
         t = get_template("forms/includes/built_form.html")
         context["form"] = form
         form_args = (form, context, post or None, files or None)

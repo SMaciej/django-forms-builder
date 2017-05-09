@@ -38,7 +38,6 @@ class FormDetail(TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        import pdb; pdb.set_trace()
         if not context:
             return render_to_response("forms/form_disabled.html")
         login_required = context["form"].login_required

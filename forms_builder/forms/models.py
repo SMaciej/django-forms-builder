@@ -279,6 +279,9 @@ class FormsList(models.Model):
     def __str__(self):
         return str(self.title)
 
+    def get_absolute_url(self):
+        return reverse('forms_list', kwargs={'slug': self.slug})
+
 
 class FormEntry(AbstractFormEntry):
     form = models.ForeignKey("Form", related_name="entries")

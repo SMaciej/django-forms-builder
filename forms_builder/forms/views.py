@@ -31,7 +31,7 @@ class FormDetail(TemplateView):
         context = super(FormDetail, self).get_context_data(**kwargs)
         published = Form.objects.published(for_user=self.request.user)
         try:
-            context["form"] = published.objects.get(slug=kwargs["slug"])
+            context["form"] = published.get(slug=kwargs["slug"])
         except Form.DoesNotExist:
             context["form"] = None
         return context

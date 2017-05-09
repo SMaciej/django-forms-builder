@@ -133,8 +133,10 @@ def forms_list(request, slug, template="forms/forms_list.html"):
     Show forms list.
     """
     forms_list = FormsList.objects.get(slug=slug)
-    forms = forms_list.forms.all().filter(status=2, 
-            publish_date__lte=datetime.datetime.now(), 
-            Q(expiry_date__gte=datetime.datetime.now()) | Q(expiry_date__isnull=True))
+    forms = forms_list.forms.all().filter(
+            Q(expiry_date__gte=datetime.datetime.now()) | Q(expiry_date__isnull=True), 
+            publish_date__lte=datetime.datetime.now(),
+            status=2, 
+    )
     context = {'forms': forms}
     return render(request, template, context)

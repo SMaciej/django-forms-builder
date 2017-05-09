@@ -30,10 +30,10 @@ class FormDetail(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(FormDetail, self).get_context_data(**kwargs)
         published = Form.objects.published(for_user=self.request.user)
-        if not published:
+        try:
+            context["form"] = published.objects.get(slug=kwargs["slug"])
+        except Form.DoesNotExist:
             context["form"] = None
-        else:
-            context["form"] = get_object_or_404(published, slug=kwargs["slug"])
         return context
 
     def get(self, request, *args, **kwargs):

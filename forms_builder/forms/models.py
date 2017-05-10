@@ -292,8 +292,7 @@ class FieldEntry(AbstractFieldEntry):
 
 
 class Form(AbstractForm):
-    forms_list = models.ManyToManyField(FormsList, related_name='forms', 
-                                        null=True, blank=True)
+    forms_list = models.ManyToManyField(FormsList, related_name='forms', blank=True)
 
 
 class Field(AbstractField):

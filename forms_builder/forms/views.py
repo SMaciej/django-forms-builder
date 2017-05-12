@@ -137,8 +137,8 @@ def forms_list(request, slug, template="forms/forms_list.html"):
     forms_list = FormsList.objects.get(slug=slug)
     forms = forms_list.forms.all().filter(
             Q(expiry_date__gte=datetime.datetime.now()) | Q(expiry_date__isnull=True), 
-            publish_date__lte=datetime.datetime.now(),
+            Q(publish_date__lte=datetime.datetime.now()) | Q(publish_date__lte=True), 
             status=2, 
     )
-    context = {'forms': forms}
+    context = {'forms_list': forms_list, 'forms': forms}
     return render(request, template, context)

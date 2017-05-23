@@ -25,7 +25,10 @@ STATUS_CHOICES = (
     (STATUS_DRAFT, _("Draft")),
     (STATUS_PUBLISHED, _("Published")),
 )
-TERMS_CHOICES = [(k, k) for k, v in list(get_perms_type().items())]
+try:
+    TERMS_CHOICES = [(k, k) for k, v in list(get_perms_type().items())]
+except AttributeError:
+    TERMS_CHOICES = []
 
 
 class FormManager(models.Manager):

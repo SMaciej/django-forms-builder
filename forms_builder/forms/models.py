@@ -13,10 +13,10 @@ from forms_builder.forms import fields
 from forms_builder.forms import settings
 from forms_builder.forms.utils import now, slugify, unique_slug
 
-from terms.views import get_perms_type
+#from terms.views import get_perms_type
 from multiselectfield import MultiSelectField
 from sorl.thumbnail import ImageField
-from tinymce_ex.models import HTMLField
+#from tinymce_ex.models import HTMLField
 
 
 STATUS_DRAFT = 1
@@ -26,7 +26,7 @@ STATUS_CHOICES = (
     (STATUS_PUBLISHED, _("Published")),
 )
 try:
-    TERMS_CHOICES = [(k, k) for k, v in list(get_perms_type().items())]
+    TERMS_CHOICES = []
 except AttributeError:
     TERMS_CHOICES = []
 
@@ -69,7 +69,7 @@ class AbstractForm(models.Model):
                         null=True, blank=True)
     slug = models.SlugField(_("Slug"), editable=settings.EDITABLE_SLUGS,
         max_length=100, unique=True)
-    intro = HTMLField(_("Intro"), blank=True, null=True)
+    #intro = HTMLField(_("Intro"), blank=True, null=True)
     button_text = models.CharField(_("Button text"), max_length=50,
         default=_("Submit"))
     response = models.TextField(_("Response"), blank=True)
@@ -285,6 +285,29 @@ class FormsList(models.Model):
 
     def get_absolute_url(self):
         return reverse('forms_list', kwargs={'slug': self.slug})
+
+
+class ExternalFormEntry(models.Model):
+    """
+    Link redirecting to a form on external site.
+    """
+    title = models.CharField(_("Title"), max_length=255)
+    banner = ImageField(_("Banner"), upload_to='form_banners', 
+                        null=True, blank=True)
+    slug = models.SlugField(_("Slug"), editable=settings.EDITABLE_SLUGS,
+        max_length=100, unique=True)
+    url = models.CharField(_("Link"), max_length=511)
+    forms_list = models.ManyToManyField(FormsList, related_name='external_forms', blank=True)
+
+    class Meta:
+        verbose_name = _("External form")
+        verbose_name_plural = _("External forms")
+
+    def __str__(self):
+        return str(self.title)
+
+    def get_absolute_url(self):
+        return self.url
 
 
 class FormEntry(AbstractFormEntry):

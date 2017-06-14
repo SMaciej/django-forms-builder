@@ -13,10 +13,10 @@ from forms_builder.forms import fields
 from forms_builder.forms import settings
 from forms_builder.forms.utils import now, slugify, unique_slug
 
-#from terms.views import get_perms_type
+from terms.views import get_perms_type
 from multiselectfield import MultiSelectField
 from sorl.thumbnail import ImageField
-#from tinymce_ex.models import HTMLField
+from tinymce_ex.models import HTMLField
 
 
 STATUS_DRAFT = 1
@@ -26,7 +26,7 @@ STATUS_CHOICES = (
     (STATUS_PUBLISHED, _("Published")),
 )
 try:
-    TERMS_CHOICES = []
+    TERMS_CHOICES = [(k, k) for k, v in list(get_perms_type().items())]
 except AttributeError:
     TERMS_CHOICES = []
 
@@ -69,7 +69,7 @@ class AbstractForm(models.Model):
                         null=True, blank=True)
     slug = models.SlugField(_("Slug"), editable=settings.EDITABLE_SLUGS,
         max_length=100, unique=True)
-    #intro = HTMLField(_("Intro"), blank=True, null=True)
+    intro = HTMLField(_("Intro"), blank=True, null=True)
     button_text = models.CharField(_("Button text"), max_length=50,
         default=_("Submit"))
     response = models.TextField(_("Response"), blank=True)
@@ -294,8 +294,6 @@ class ExternalFormEntry(models.Model):
     title = models.CharField(_("Title"), max_length=255)
     banner = ImageField(_("Banner"), upload_to='form_banners', 
                         null=True, blank=True)
-    slug = models.SlugField(_("Slug"), editable=settings.EDITABLE_SLUGS,
-        max_length=100, unique=True)
     url = models.CharField(_("Link"), max_length=511)
     forms_list = models.ManyToManyField(FormsList, related_name='external_forms', blank=True)
 

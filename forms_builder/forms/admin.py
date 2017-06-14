@@ -208,7 +208,6 @@ class FormsListAdmin(admin.ModelAdmin):
 class ExternalFormAdmin(admin.ModelAdmin):
     list_display = ('title', )
     search_fields = ('title', 'url')
-    prepopulated_fields = {'slug': ('title',)}
 
 
 admin.site.register(Form, FormAdmin)

@@ -20,7 +20,6 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=255, verbose_name='Title')),
                 ('banner', sorl.thumbnail.fields.ImageField(blank=True, null=True, upload_to='form_banners', verbose_name='Banner')),
-                ('slug', models.SlugField(editable=False, max_length=100, unique=True, verbose_name='Slug')),
                 ('url', models.CharField(max_length=511, verbose_name='Link')),
             ],
             options={

@@ -295,6 +295,14 @@ class ExternalFormEntry(models.Model):
     banner = ImageField(_("Banner"), upload_to='form_banners', 
                         null=True, blank=True)
     url = models.CharField(_("Link"), max_length=511)
+    status = models.IntegerField(_("Status"), choices=STATUS_CHOICES,
+        default=STATUS_PUBLISHED)
+    publish_date = models.DateTimeField(_("Published from"),
+        help_text=_("With published selected, won't be shown until this time"),
+        blank=True, null=True)
+    expiry_date = models.DateTimeField(_("Expires on"),
+        help_text=_("With published selected, won't be shown after this time"),
+        blank=True, null=True)
     forms_list = models.ManyToManyField(FormsList, related_name='external_forms', blank=True)
 
     class Meta:

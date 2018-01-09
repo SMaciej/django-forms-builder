@@ -292,6 +292,7 @@ class ExternalFormEntry(models.Model):
     Link redirecting to a form on external site.
     """
     title = models.CharField(_("Title"), max_length=255)
+    slug = models.SlugField(_('Slug'), max_length=255, unique=True)
     banner = ImageField(_("Banner"), upload_to='form_banners', 
                         null=True, blank=True)
     url = models.CharField(_("Link"), max_length=511)

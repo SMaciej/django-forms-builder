@@ -5,6 +5,7 @@ import datetime
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render, render_to_response
@@ -100,7 +101,7 @@ class FormDetail(TemplateView):
             "message": form.email_message,
             "request": request,
         }
-        email_from = form.email_from or settings.DEFAULT_FROM_EMAIL
+        email_from = settings.DEFAULT_FROM_EMAIL
         email_to = form_for_form.email_to()
         if email_to and form.send_email:
             send_mail_template(subject, "form_response", email_from,

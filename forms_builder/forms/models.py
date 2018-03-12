@@ -90,8 +90,6 @@ class AbstractForm(models.Model):
         choices=TERMS_CHOICES, max_length=1020)
     send_email = models.BooleanField(_("Send email"), default=True, help_text=
         _("If checked, the person entering the form will be sent an email"))
-    email_from = models.EmailField(_("From address"), blank=True,
-        help_text=_("The address the email will be sent from"))
     email_copies = models.CharField(_("Send copies to"), blank=True,
         help_text=_("One or more email addresses, separated by commas"),
         max_length=200)

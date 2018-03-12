@@ -36,7 +36,7 @@ form_admin_fieldsets = [
     (None, {"fields": ("title", ("status", "login_required",),
         ("publish_date", "expiry_date",),
         "intro", "banner", "button_text", "response", "redirect_url", "forms_list", "terms")}),
-    (_("Email"), {"fields": ("send_email", "email_from", "email_copies",
+    (_("Email"), {"fields": ("send_email", "email_copies",
         "email_subject", "email_message")}), ]
 
 if EDITABLE_SLUGS:
@@ -65,8 +65,7 @@ class FormAdmin(admin.ModelAdmin):
     list_editable = ("status", "email_copies", "publish_date", "expiry_date")
     list_filter = ("status",)
     filter_horizontal = form_admin_filter_horizontal
-    search_fields = ("title", "intro", "response", "email_from",
-                     "email_copies")
+    search_fields = ("title", "intro", "response", "email_copies")
     radio_fields = {"status": admin.HORIZONTAL}
     fieldsets = form_admin_fieldsets
 

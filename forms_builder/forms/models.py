@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 from django.contrib.sites.models import Site
-from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
@@ -16,7 +15,7 @@ from forms_builder.forms.utils import now, slugify, unique_slug
 from terms.views import get_perms_type
 from multiselectfield import MultiSelectField
 from sorl.thumbnail import ImageField
-from tinymce_ex.models import HTMLField
+from tinymce.models import HTMLField
 
 
 STATUS_DRAFT = 1

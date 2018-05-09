@@ -16,7 +16,7 @@ from forms_builder.forms.utils import now, slugify, unique_slug
 from terms.views import get_perms_type
 from multiselectfield import MultiSelectField
 from sorl.thumbnail import ImageField
-from tinymce_ex.models import HTMLField
+from tinymce.models import HTMLField
 
 
 STATUS_DRAFT = 1

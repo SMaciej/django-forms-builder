@@ -5,6 +5,7 @@ import datetime
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render, render_to_response
@@ -20,7 +21,7 @@ from forms_builder.forms.settings import EMAIL_FAIL_SILENTLY
 from forms_builder.forms.signals import form_invalid, form_valid
 from forms_builder.forms.utils import split_choices
 
-from terms.views import UpdateUserView
+from terms.views import update_user as terms_update_user
 
 
 class FormDetail(TemplateView):
@@ -58,7 +59,7 @@ class FormDetail(TemplateView):
         else:
             # Attachments read must occur before model save,
             # or seek() will fail on large uploads.
-            UpdateUserView.as_view()(request)
+            terms_update_user(request)
             attachments = []
             for f in form_for_form.files.values():
                 f.seek(0)
